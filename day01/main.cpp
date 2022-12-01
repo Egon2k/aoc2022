@@ -1,8 +1,6 @@
-#include <fstream>
 #include <iostream>
-#include <string.h>
 #include <list>
-#include <algorithm>
+#include <fstream>
 
 int main()
 {
@@ -22,9 +20,9 @@ int main()
         }
     }
 
-    std::cout << "Part 1: " << *std::max_element(sumArray.begin(), sumArray.end()) << std::endl;
-
     sumArray.sort();
+
+    std::cout << "Part 1: " << sumArray.back() << std::endl;
 
     for (int i = 0; i < 3; i++){
         sum3 += sumArray.back();
