@@ -21,11 +21,8 @@ def part2(data):
     return sum
 
 if __name__ == "__main__":
-    data = []
-
     with open('day04/data.txt') as f:
-        for line in f:
-            data.append(line.strip())
+        data = f.read().splitlines()
 
     print(part1(data))
     print(part2(data))
