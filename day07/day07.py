@@ -1,4 +1,7 @@
-def solve(data, open_folders, all_folders):
+def solve(data):
+    open_folders = []
+    all_folders = []
+
     for line in data:
         if line.startswith('$ cd '):            # change directory
             parameter = line.split(' ')[-1]
@@ -15,30 +18,23 @@ def solve(data, open_folders, all_folders):
                 file_size = int(line.split(' ')[0])
                 for i, _ in enumerate(open_folders):
                     open_folders[i] += file_size
+    return open_folders + all_folders 
 
 def part1(data):
-    open_folders = []
-    all_folders = []
-
-    solve(data, open_folders, all_folders)
+    folders = solve(data)
     
     sum = 0
-    for folder in open_folders + all_folders:
+    for folder in folders:
         if folder < 100_000:
             sum += folder
     return sum
 
 def part2(data):
-    open_folders = []
-    all_folders = []
-
-    solve(data, open_folders, all_folders)
+    folders = solve(data)
     
-    folders = open_folders + all_folders
-    space_required = 40_000_000
     space_taken = max(folders)
     for folder in sorted(folders):
-        if space_taken - folder < space_required:
+        if space_taken - folder < 40_000_000:
             return folder
 
 if __name__ == "__main__":
