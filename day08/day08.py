@@ -37,10 +37,6 @@ def look(tree, sight):
     return res
 
 def check_sight(tree, r_idx, c_idx, row, col):
-    if r_idx == 1 and c_idx == 2:
-        pass
-    if r_idx == 3 and c_idx == 2:
-        pass    
     up = look(tree, col[:r_idx][::-1]) # looking up ([::1] reverses the string)
     left = look(tree, row[:c_idx][::-1]) # looking left
     right = look(tree, row[c_idx+1:]) # looking right
