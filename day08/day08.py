@@ -24,17 +24,40 @@ def part1(data):
                 sum += 1 
     return sum
 
-def check_sight(r_idx, c_idx, row, col):
-    pass
+def look(tree, sight):
+    if sight == "":
+        return 0
+    res = 0
+    for s in sight:
+        if int(tree) > int(s):
+            res += 1
+        else:
+            res += 1
+            break
+    return res
+
+def check_sight(tree, r_idx, c_idx, row, col):
+    if r_idx == 1 and c_idx == 2:
+        pass
+    if r_idx == 3 and c_idx == 2:
+        pass    
+    up = look(tree, col[:r_idx][::-1]) # looking up ([::1] reverses the string)
+    left = look(tree, row[:c_idx][::-1]) # looking left
+    right = look(tree, row[c_idx+1:]) # looking right
+    down = look(tree, col[r_idx+1:]) # looking down
+    return up * down * left * right
 
 def part2(data):
     pivot = pivot_data(data)
+    res = 0
     for r_idx in range(len(data)):
         for c_idx in range(len(data[0])):
-            check_sight(r_idx, c_idx, data[r_idx], pivot[c_idx])
+            tree = data[r_idx][c_idx]
+            res = max(res, check_sight(tree, r_idx, c_idx, data[r_idx], pivot[c_idx]))
+    return res
 
 if __name__ == "__main__":
-    with open('day08/testdata.txt') as f:
+    with open('day08/data.txt') as f:
         data = f.read().splitlines()
 
     print(part1(data))
