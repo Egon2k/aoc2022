@@ -7,8 +7,8 @@ def add_tuples(x, y):
     return tuple(map(lambda i, j: i + j, x, y))
 
 def is_touching(t,h):
-    return (abs(abs(h[0]) - abs(t[0])) <= 1) and \
-           (abs(abs(h[1]) - abs(t[1])) <= 1)
+    return (abs(h[0] - t[0]) <= 1) and \
+           (abs(h[1] - t[1]) <= 1)
 
 def follow(t, h):
     if t == h:
@@ -42,10 +42,10 @@ def follow(t, h):
     return t
 
 def print_test_grid(t,h):
-    for i in range(4,-1,-1):
-        for j in range(0,6,1):
-    #for i in range(10,-10,-1):
-    #    for j in range(-10,10,1):     
+    #for i in range(4,-1,-1):
+    #    for j in range(0,6,1):
+    for i in range(10,-10,-1):
+        for j in range(-10,10,1):     
             if (j,i) == h:
                 print("H", end = "")
             elif (j,i) == t:
@@ -66,8 +66,8 @@ def part1(data):
         dir_, len_ = line.split(' ')
         
         for _ in range(int(len_)):
-            print_test_grid(t,h)
-
+            #print_test_grid(t,h)
+            
             if dir_ == 'R':
                 h = add_tuples(h, RIGHT)
             elif dir_ == 'L':
