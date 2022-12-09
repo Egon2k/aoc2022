@@ -83,7 +83,33 @@ def part1(data):
     return len(set(t_pos))
 
 def part2(data):
-    pass
+    h = (0,0)
+    knots = [(0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), (0,0)]
+    t_pos = []
+
+    for line in data:
+        dir_, len_ = line.split(' ')
+        
+        for _ in range(int(len_)):
+            #print_test_grid(t,h)
+            
+            if dir_ == 'R':
+                h = add_tuples(h, RIGHT)
+            elif dir_ == 'L':
+                h = add_tuples(h, LEFT)
+            elif dir_ == 'U':
+                h = add_tuples(h, UP)
+            elif dir_ == 'D':
+                h = add_tuples(h, DOWN)
+        
+            for i, _ in enumerate(knots):
+                if i == 0:
+                    knots[i] = follow(knots[i], h)
+                else:
+                    knots[i] = follow(knots[i], knots[i-1])
+            t_pos.append(knots[-1])
+    
+    return len(set(t_pos))
 
 if __name__ == "__main__":
     with open('day09/data.txt') as f:
