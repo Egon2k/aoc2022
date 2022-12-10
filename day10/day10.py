@@ -25,7 +25,7 @@ def part1(data):
         
 
 def part2(data):
-    grid = [['.' for _ in range(40)] for _ in range(6)]
+    grid = [[' ' for _ in range(40)] for _ in range(6)]
     cycles = 0
     register = 1
     
