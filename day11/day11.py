@@ -16,7 +16,7 @@ class Monkey():
             op = ['*', int(op_string.split(' ')[-1])]
         return op
 
-    def inspect(self):
+    def inspect_p1(self):
         if len(self.items) > 0:
             self.inspected_items += 1
             if (self.op[0] == '+'):
@@ -26,6 +26,17 @@ class Monkey():
             elif (self.op[0] == 'square'):
                 self.items[0] *= self.items[0]
             self.items[0] = int(self.items[0] / 3)
+    
+    def inspect_p2(self, lcm):
+        if len(self.items) > 0:
+            self.inspected_items += 1
+            if (self.op[0] == '+'):
+                self.items[0] += self.op[1]
+            elif (self.op[0] == '*'):
+                self.items[0] *= self.op[1]
+            elif (self.op[0] == 'square'):
+                self.items[0] *= self.items[0]
+            self.items[0] = int(self.items[0]) % lcm
 
     def throw_item(self):
         if len(self.items) > 0:
@@ -65,7 +76,7 @@ def part1(monkeys):
     for _ in range(20):
         for monkey in monkeys: 
             while(monkey.items != []):
-                monkey.inspect()
+                monkey.inspect_p1()
                 receiver, item = monkey.throw_item()
                 monkeys[receiver].catch_item(item)
 
@@ -73,14 +84,25 @@ def part1(monkeys):
     return solution[-2] * solution[-1]
 
 
-def part2(data):
-    pass
+def part2(monkeys):
+    import math
+    lcm = math.lcm(*[monkey.test for monkey in monkeys])
+
+    for _ in range(10000):
+        for monkey in monkeys: 
+            while(monkey.items != []):
+                monkey.inspect_p2(lcm)
+                receiver, item = monkey.throw_item()
+                monkeys[receiver].catch_item(item)
+
+    solution = sorted([monkey.inspected_items for monkey in monkeys])
+    return solution[-2] * solution[-1]
 
 if __name__ == "__main__":
     with open('day11/data.txt') as f:
         data = f.read().splitlines()
 
     monkeys = parse_monkeys(data)
-    
     print(part1(monkeys))
+    monkeys = parse_monkeys(data)
     print(part2(monkeys))
