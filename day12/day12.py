@@ -56,8 +56,15 @@ def part1(data, start, dest):
     grid = create_grid(data)
     return solve(grid, start, dest)
 
-def part2(data):
-    pass
+def part2(data, starts, dest):
+    grid = create_grid(data)
+    paths = []
+    
+    for idx, start in enumerate(starts):
+        if (idx % 100) == 0:
+            print(f'{idx} of {len(starts)}')
+        paths.append(solve(grid, start, dest))
+    return min(paths)
 
 if __name__ == "__main__":
     with open('day12/data.txt') as f:
@@ -73,4 +80,11 @@ if __name__ == "__main__":
             data[idx] = line.replace('E', 'z')
 
     print(part1(data, start, dest))
-    print(part2(data))
+
+    starts = []
+    for row in range(len(data)):
+        for col in range(len(data[0])):
+            if data[row][col] == 'a':
+                starts.append((row, col))
+
+    print(part2(data, starts, dest))
