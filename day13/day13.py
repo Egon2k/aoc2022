@@ -1,3 +1,5 @@
+from functools import cmp_to_key
+
 def solve(left, right):
     for l, r in zip(left, right):
 
@@ -35,8 +37,20 @@ def part1(packets):
     return sum
     
 
-def part2(data):
-    pass
+def part2(packets):
+    prod = 1
+    all_packets = [[[2]], [[6]]]
+    for packet in packets:
+        left, right = packet
+        all_packets.append(left)
+        all_packets.append(right)
+    
+    all_packets.sort(key=cmp_to_key(lambda a, b: -1 if solve(a, b) else 1))         # handle return value of solve as -1 and 1 instead of True and False to satisfy the cmp_to_key function
+    
+    for idx, packet in enumerate(all_packets):
+        if packet in [[[2]], [[6]]]:
+            prod *= (idx + 1)
+    return prod
 
 if __name__ == "__main__":
     with open('day13/data.txt') as f:
