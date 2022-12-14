@@ -20,15 +20,8 @@ def ripple_sand(sand):
 
     return sand, False
 
-def part1(dg):
+def solve(dg, abyss, sand):
     sum = 0
-    abyss = 0
-    for k, _ in dg.items():
-        _, y = k
-        abyss = max(abyss, y)
-
-    sand = (500, 0)
-    
     while True:
         old_sand = sand
         sand, rippled = ripple_sand(sand)
@@ -45,17 +38,31 @@ def part1(dg):
             sand = (500, 0)
 
     return sum
-  
-def part2(data):
-    pass
 
-if __name__ == "__main__":
-    with open('day14/data.txt') as f:
-        data = f.read().splitlines()
-    
+def part1(dg):
+    abyss = 0
+    for k, _ in dg.items():
+        _, y = k
+        abyss = max(abyss, y)
+
+    sand = (500, 0)
+
+    return solve(dg, abyss, sand)
+
+def part2(dg):
+    abyss = 0
+    for k, _ in dg.items():
+        _, y = k
+        abyss = max(abyss, y)
+
+    sand = (500, 0)
+
+    return solve(dg, abyss, sand)
+
+def prepare_data(data):
     dg = {}
 
-    for i, line in enumerate(data):
+    for line in data:
         tokens = [tuple(int(y) for y in x.split(',')) for x in line.split(' -> ')]
 
         x1, y1 = tokens[0]
@@ -75,5 +82,13 @@ if __name__ == "__main__":
                     y1 -= 1
                 dg[(x1, y1)] = '#'
     
+    return dg
+
+if __name__ == "__main__":
+    with open('day14/testdata.txt') as f:
+        data = f.read().splitlines()
+    
+    dg = prepare_data(data)  
     print(part1(dg))
-    print(part2(data))
+    dg = prepare_data(data)
+    print(part2(dg))
